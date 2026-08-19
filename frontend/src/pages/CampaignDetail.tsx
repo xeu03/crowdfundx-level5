@@ -9,6 +9,8 @@ import { useCampaign } from '../hooks/useCampaign';
 import { useEventStream } from '../hooks/useEventStream';
 import { useToast } from '../hooks/useToast';
 import { track } from '../lib/monitoring';
+import { notifyMilestone } from '../lib/notifications';
+import { NotifyButton } from '../components/NotifyButton';
 import {
   closeFailedTx,
   contributeTx,
@@ -16,7 +18,9 @@ import {
   refundTx,
   releaseMilestoneTx,
 } from '../lib/contracts';
-import { formatCFX, formatDeadline, parseCFX, progressPercent, shortAddress, timeLeft } from '../lib/format';
+import { formatCFX, formatDeadline, formatUSD, parseCFX, progressPercent, shortAddress, timeLeft } from '../lib/format';
+import { CFX_USD_RATE } from '../config';
+import { useUsdDisplay } from '../hooks/useUsdDisplay';
 import type { DecodedEvent, Status } from '../lib/types';
 
 interface DetailProps {
@@ -25,6 +29,7 @@ interface DetailProps {
 
 export function CampaignDetail({ walletAddress }: DetailProps) {
   const { id = '' } = useParams();
+  const { showUsd } = useUsdDisplay();
   const { push } = useToast();
   const { state, contribution, loading, error, reload } = useCampaign(id, walletAddress);
   const [events, setEvents] = useState<DecodedEvent[]>([]);
@@ -38,6 +43,12 @@ export function CampaignDetail({ walletAddress }: DetailProps) {
       setEvents((current) => [event, ...current].slice(0, 50));
       // Any state-changing event invalidates the snapshot.
       reload();
+      // Browser notifications for the moments backers care about.
+      if (event.name === 'milestone_released') {
+        notifyMilestone('Milestone released', `A milestone of your campaign was released (#${String(event.data.index ?? '?')})`);
+      } else if (event.name === 'goal_reached') {
+        notifyMilestone('Goal reached 🎉', 'A campaign you follow just hit its funding goal');
+      }
     },
     [reload],
   );
@@ -66,6 +77,14 @@ export function CampaignDetail({ walletAddress }: DetailProps) {
       push('error', err instanceof Error ? err.message : 'Transaction failed');
     } finally {
       setBusy(null);
+    }
+  };
+
+  const safeParse = (input: string): bigint => {
+    try {
+      return parseCFX(input);
+    } catch {
+      return 0n;
     }
   };
 
@@ -120,7 +139,10 @@ export function CampaignDetail({ walletAddress }: DetailProps) {
 
         <div className="card detail-card">
           <div className="detail-raised">
-            <strong>{formatCFX(config.total_raised)} CFX</strong>
+            <strong>
+              {formatCFX(config.total_raised)} CFX
+              {showUsd && <span className="detail-usd"> ≈ {formatUSD(config.total_raised, CFX_USD_RATE)}</span>}
+            </strong>
             <span>
               raised of {formatCFX(config.goal)} goal · {timeLeft(config.deadline)}
             </span>
@@ -239,6 +261,7 @@ export function CampaignDetail({ walletAddress }: DetailProps) {
         {status === 'Active' && (
           <form className="card contribute-card" onSubmit={handleContribute}>
             <h2>Back this campaign</h2>
+          <NotifyButton campaignName={config.name} />
             {contribution > 0n && (
               <p className="detail-hint">Your contribution: {formatCFX(contribution)} CFX</p>
             )}
@@ -257,6 +280,11 @@ export function CampaignDetail({ walletAddress }: DetailProps) {
             {inputError && (
               <p className="field-error" role="alert">
                 {inputError}
+              </p>
+            )}
+            {showUsd && amountInput.trim() !== '' && (
+              <p className="detail-hint" data-testid="usd-hint">
+                ≈ {formatUSD(safeParse(amountInput), CFX_USD_RATE)} at the current display rate
               </p>
             )}
             <button

@@ -2,6 +2,7 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App';
 import { ToastProvider } from './hooks/useToast';
+import { UsdDisplayProvider } from './hooks/useUsdDisplay';
 import { initSentry } from './lib/monitoring';
 import './styles/index.css';
 
@@ -14,7 +15,9 @@ void initSentry();
 createRoot(root).render(
   <StrictMode>
     <ToastProvider>
-      <App />
+      <UsdDisplayProvider>
+        <App />
+      </UsdDisplayProvider>
     </ToastProvider>
   </StrictMode>,
 );

@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import {
   formatCFX,
   formatDeadline,
+  formatUSD,
   parseCFX,
   progressPercent,
   shortAddress,
@@ -76,6 +77,18 @@ describe('timeLeft', () => {
 describe('formatDeadline', () => {
   it('formats a unix timestamp as a date', () => {
     expect(formatDeadline(1_782_547_200)).toMatch(/\d{4}/); // contains a year
+  });
+});
+
+describe('formatUSD', () => {
+  it('converts raw CFX units at the configured rate', () => {
+    expect(formatUSD(1_000_000_000n, 0.01)).toBe('$1.00'); // 100 CFX
+    expect(formatUSD(10_000_000n, 0.01)).toBe('$0.01');    // 1 CFX
+    expect(formatUSD(123_456_789n, 0.01)).toBe('$0.12');
+  });
+
+  it('formats large values compactly', () => {
+    expect(formatUSD(10_000_000_000n, 0.1)).toContain('$100');
   });
 });
 

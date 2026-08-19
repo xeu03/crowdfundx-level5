@@ -1,6 +1,7 @@
 import { Link, NavLink } from 'react-router-dom';
 import { WalletButton } from './WalletButton';
 import { NetworkBadge } from './NetworkBadge';
+import { UsdToggle } from './UsdToggle';
 import type { WalletState } from '../hooks/useWallet';
 
 export function Header({ wallet }: { wallet: WalletState }) {
@@ -35,6 +36,7 @@ export function Header({ wallet }: { wallet: WalletState }) {
           </NavLink>
         </nav>
         <NetworkBadge />
+        <UsdToggle />
         <WalletButton wallet={wallet} />
       </div>
     </header>

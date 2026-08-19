@@ -1026,3 +1026,30 @@ p {
 .leaderboard-address:hover {
   color: var(--primary-hover);
 }
+
+/* --------------------------------------------------------------------------
+   USD toggle & display
+   -------------------------------------------------------------------------- */
+
+.usd-toggle {
+  background: var(--bg-elevated);
+  color: var(--text-faint);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.25rem 0.6rem;
+  cursor: pointer;
+}
+
+.usd-toggle--on {
+  color: var(--success);
+  border-color: var(--success);
+}
+
+.campaign-card__usd,
+.detail-usd {
+  color: var(--success);
+  font-size: 0.85em;
+  font-weight: 600;
+}

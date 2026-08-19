@@ -59,6 +59,15 @@ export function formatDeadline(deadline: number | bigint): string {
   });
 }
 
+/** Convert raw CFX units to an approximate USD string (env-configurable rate). */
+export function formatUSD(raw: bigint, rate: number): string {
+  const cfx = Number(raw) / 10 ** CFX_DECIMALS;
+  const usd = cfx * rate;
+  if (usd >= 1000) return `$${usd.toLocaleString(undefined, { maximumFractionDigits: 0 })}`;
+  if (usd >= 1) return `$${usd.toFixed(2)}`;
+  return `$${usd.toFixed(usd < 0.01 ? 4 : 2)}`;
+}
+
 /** Progress percentage clamped to [0, 100]. */
 export function progressPercent(raised: bigint, goal: bigint): number {
   if (goal === 0n) return 0;

@@ -18,6 +18,16 @@ export const isConfigured = FACTORY_ADDRESS.length > 0 && TOKEN_ADDRESS.length >
 /** CFX token decimals (fixed in the token contract). */
 export const CFX_DECIMALS = 7;
 
+/**
+ * Approximate CFX → USD rate for display purposes (user-requested feature:
+ * "Would love USD amounts shown next to CFX"). Demo rate; wire to an oracle
+ * or the backend for production.
+ */
+export const CFX_USD_RATE = Number(import.meta.env.VITE_CFX_USD_RATE ?? 0.01);
+
+/** localStorage key for the USD display toggle. */
+export const USD_DISPLAY_KEY = 'cfx-show-usd';
+
 /** Poll interval for the event stream (ms). */
 export const EVENT_POLL_MS = 4_000;
 
