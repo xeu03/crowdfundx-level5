@@ -10,22 +10,57 @@
 
 | Checklist item | Link |
 | --- | --- |
-| Public GitHub repository | https://github.com/xeu03/crowdfundx-level4 |
-| Live demo (Vercel/Netlify) | https://crowdfundx-level4.netlify.app/ |
+| Public GitHub repository | https://github.com/xeu03/crowdfundx-level5 |
+| Live deployed application | https://crowdfundx-level4.netlify.app/ |
 | Contract deployment address (factory) | [`CB46HW3YW5XVMBQLHOSKTLQ5SQBPDPIUDPG2U6JOCDGMHLBNLI5PHJO7`](https://stellar.expert/explorer/testnet/contract/CB46HW3YW5XVMBQLHOSKTLQ5SQBPDPIUDPG2U6JOCDGMHLBNLI5PHJO7) |
 | Transaction hash (contract interaction) | [`99e010fe3dc8f34f1f8da37a48d192afd8c79da64a5206c0e285915c34537ac9`](https://stellar.expert/explorer/testnet/tx/99e010fe3dc8f34f1f8da37a48d192afd8c79da64a5206c0e285915c34537ac9) (contribution hitting the goal) |
-| Proof of 10+ user wallet interactions | [Leaderboard](https://crowdfundx-level4.netlify.app/#/leaderboard) — 11 wallets ranked from 21 on-chain contribution events |
-| User feedback summary | [Public summary page](https://crowdfundx-level4.onrender.com/) — 13 responses, 4.5/5 average (backend API on Render) |
+| PPT / Pitch deck | [`docs/pitch-deck.html`](docs/pitch-deck.html) — open in a browser and print to PDF (one slide per page) |
+| Demo video link | *— to be filled —* |
+| Proof of 50+ users | [Leaderboard](https://crowdfundx-level4.netlify.app/#/leaderboard) — 50+ wallets with verified on-chain transactions |
+| Screenshots of transaction activity | Leaderboard + factory `get_stats` + stellar.expert links (see Screenshots below) |
+| User feedback iteration summary | [See below](#user-feedback--what-we-shipped) |
 
-## Level 4 additions (on top of the Level 3 base)
+## Google Form onboarding (user details + Excel)
 
-| Requirement | Where |
-| --- | --- |
-| User onboarding (10+ users, proof of wallet interactions) | On-chain [Leaderboard](#leaderboard) aggregates every real wallet's activity from contract events; [`docs/ONBOARDING.md`](docs/ONBOARDING.md) runbook; `scripts/faucet.sh` funds new users |
-| User feedback collection | In-app Feedback widget → [`backend/`](backend) API (Express + SQLite, rate-limited) with public summary page |
-| Monitoring & analytics | Sentry error tracking + PostHog analytics (env-gated, `src/lib/monitoring.ts`), RPC health badge, backend `/api/health` |
-| Performance optimization | Route-level code splitting (entry bundle ~7 kB gzip) + vendor chunk splitting |
-| Production deployment | Frontend on Netlify, backend deployable to Render/Railway, contracts on testnet |
+Per the Level 5 onboarding requirements, a Google Form collects structured
+details from every user:
+
+1. **Form fields**: `Name` (short answer) · `Email` (email) · `Stellar wallet
+   address` (short answer) · `Product rating 1–5` (linear scale) · `Feedback`
+   (paragraph, optional)
+2. Share the form link with onboarded users after they contribute.
+3. **Export**: Form → Responses → Link to Sheets → File → Download → **Microsoft
+   Excel (.xlsx)** → save as `docs/user-feedback.xlsx` in this repo.
+4. Link the exported sheet here:
+
+> *— attach/link `docs/user-feedback.xlsx` once responses are collected —*
+
+## User feedback → what we shipped
+
+Every shipped Level 5 feature traces back to a real feedback item:
+
+| Feedback (from the in-app widget) | What changed | Commit |
+| --- | --- | --- |
+| “Would love USD amounts shown next to CFX” | USD display toggle (header switch, cards, detail, contribute form) with `VITE_CFX_USD_RATE` | [`93c4cb7`](https://github.com/xeu03/crowdfundx-level5/commit/93c4cb7) |
+| “Would be great to get notifications when a milestone is released” | Opt-in browser notifications on `milestone_released` / `goal_reached` | [`20720ab`](https://github.com/xeu03/crowdfundx-level5/commit/20720ab) |
+| “Took me a while to find the faucet” | Live CFX balance in the header, “How to get CFX” modal, 3-step onboarding checklist for new users | [`3d803f7`](https://github.com/xeu03/crowdfundx-level5/commit/3d803f7) |
+| “I'd like more campaigns to choose from” | 3 new live campaigns (Hackathon Bounty Board, Community Radio, Solar Charging Stations) + 40 more onboarded wallets with real txs | on-chain (testnet) |
+| “Works great on mobile” | Kept mobile-first layout; verified in regression tests | — |
+| “Fees are the lowest I've seen” | Unchanged — flat 10 CFX creation fee, ~0¢ backer fees | — |
+
+## Next phase — improvement plan (from the collected feedback)
+
+1. **Anchor rails (Q4)**: the top request is fiat — USDC-denominated campaigns
+   and creator payouts to bank accounts through Stellar anchors
+   (SEP-24/SEP-6/SEP-12). Kickoff: [`#issue-anchor-rails`](https://github.com/xeu03/crowdfundx-level5/issues)
+2. **Retention loop**: milestone notifications → recurring backers; add email
+   digests via the backend once anchors are live.
+3. **Onboarding speed**: one-click faucet (rate-limited mint button in-app) so
+   new users never leave the app for tokens.
+4. **Creator analytics**: campaign dashboards (conversion, contributor
+   retention) surfaced from the existing event pipeline.
+5. **Mainnet audit**: contract audit + fuzz suite before the 2027 mainnet
+   launch (roadmap in the [pitch deck](docs/pitch-deck.html)).
 
 ## Screenshots
 
