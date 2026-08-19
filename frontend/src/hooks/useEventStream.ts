@@ -63,11 +63,16 @@ export function useEventStream({
     let timer: ReturnType<typeof setTimeout> | undefined;
     let cursor: string | undefined;
 
-    const filters: rpc.Api.EventFilter[] = [
+    // The RPC accepts at most 5 contract IDs per filter — chunk the list.
+    const chunkedIds: string[][] = [];
+    for (let i = 0; i < contractIds.length; i += 5) {
+      chunkedIds.push(contractIds.slice(i, i + 5));
+    }
+    const filters: rpc.Api.EventFilter[] = chunkedIds.map((ids) =>
       topics
-        ? { type: 'contract', contractIds, topics: [[...topics]] }
-        : { type: 'contract', contractIds },
-    ];
+        ? { type: 'contract', contractIds: ids, topics: [[...topics]] }
+        : { type: 'contract', contractIds: ids },
+    );
 
     // Empirically measured on testnet: the RPC silently drops matches that
     // are more than ~10 000 ledgers (~14h) ahead of startLedger. Start from
