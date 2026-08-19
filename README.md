@@ -1,10 +1,10 @@
 # CrowdfundX — Decentralized Crowdfunding on Stellar Soroban
 
-> **Level 4 — Green Belt Submission** (built on the Level 3 Orange Belt base)
+> **Level 5 — Blue Belt Submission** (built on the Level 3/4 base)
 > A production-ready, end-to-end Stellar dApp: three Soroban smart contracts with
 > inter-contract communication, live event streaming, a React frontend,
-> full test suites, CI/CD pipelines — plus user onboarding, on-chain
-> leaderboards, feedback collection, analytics and error monitoring.
+> full test suites, CI/CD pipelines — plus 50+ users, feedback-driven iteration,
+> on-chain leaderboards, analytics, monitoring and a pitch deck.
 
 <!-- ═══════════════════ Submission checklist ═══════════════════ -->
 
