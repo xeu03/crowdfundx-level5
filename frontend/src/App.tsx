@@ -84,7 +84,7 @@ export default function App() {
         <Header wallet={wallet} />
         <main>
           <Routes>
-            <Route path="/" element={<Explore />} />
+            <Route path="/" element={<Explore walletAddress={wallet.address} />} />
             <Route
               path="/campaign/:id"
               element={

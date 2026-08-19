@@ -1053,3 +1053,81 @@ p {
   font-size: 0.85em;
   font-weight: 600;
 }
+
+/* --------------------------------------------------------------------------
+   Modal, onboarding banner, wallet balance
+   -------------------------------------------------------------------------- */
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 60;
+  padding: 1rem;
+}
+
+.modal {
+  width: min(26rem, 100%);
+  max-height: 85vh;
+  overflow-y: auto;
+}
+
+.get-cfx-steps,
+.onboarding-steps {
+  padding-left: 1.25rem;
+  margin: 0.5rem 0 1rem;
+}
+
+.get-cfx-steps li,
+.onboarding-steps li {
+  margin-bottom: 0.6rem;
+}
+
+.link-button {
+  background: none;
+  border: none;
+  color: var(--primary);
+  cursor: pointer;
+  font: inherit;
+  padding: 0;
+  text-decoration: underline;
+}
+
+.wallet-chip__balance {
+  background: var(--success-soft);
+  color: var(--success);
+  border-radius: var(--radius-sm);
+  padding: 0.35rem 0.7rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.onboarding-banner {
+  margin-top: 1rem;
+  border-color: var(--primary);
+}
+
+.onboarding-banner__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.onboarding-banner__header h3 {
+  font-size: 1rem;
+  margin: 0;
+}
+
+.onboarding-step__check {
+  display: inline-block;
+  width: 1.4rem;
+  color: var(--text-faint);
+}
+
+.onboarding-step--done .onboarding-step__check {
+  color: var(--success);
+}

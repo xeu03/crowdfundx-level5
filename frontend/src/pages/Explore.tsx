@@ -1,6 +1,8 @@
 import { useCallback, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { CampaignCard } from '../components/CampaignCard';
+import { GetCfxModal } from '../components/GetCfxModal';
+import { OnboardingBanner } from '../components/OnboardingBanner';
 import { CampaignListSkeleton } from '../components/Skeleton';
 import { ErrorState } from '../components/ErrorState';
 import { useCampaigns } from '../hooks/useCampaigns';
@@ -9,9 +11,14 @@ import { FACTORY_ADDRESS, isConfigured } from '../config';
 import { formatCFX } from '../lib/format';
 import type { DecodedEvent } from '../lib/types';
 
-export function Explore() {
+interface ExploreProps {
+  walletAddress: string | null;
+}
+
+export function Explore({ walletAddress }: ExploreProps) {
   // Bumped by live factory events so the registry + stats stay current.
   const [refreshKey, setRefreshKey] = useState(0);
+  const [showGetCfx, setShowGetCfx] = useState(false);
   const { campaigns, stats, loading, error, reload } = useCampaigns(refreshKey);
 
   const onEvent = useCallback((event: DecodedEvent) => {
@@ -39,6 +46,10 @@ export function Explore() {
 
   return (
     <div className="container">
+      {showGetCfx && (
+        <GetCfxModal walletAddress={walletAddress} onClose={() => setShowGetCfx(false)} />
+      )}
+      <OnboardingBanner walletAddress={walletAddress} onGetCfx={() => setShowGetCfx(true)} />
       <section className="hero">
         <h1>Fund ideas that matter</h1>
         <p>

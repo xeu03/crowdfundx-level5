@@ -11,6 +11,7 @@ import { useToast } from '../hooks/useToast';
 import { track } from '../lib/monitoring';
 import { notifyMilestone } from '../lib/notifications';
 import { NotifyButton } from '../components/NotifyButton';
+import { GetCfxModal } from '../components/GetCfxModal';
 import {
   closeFailedTx,
   contributeTx,
@@ -37,6 +38,7 @@ export function CampaignDetail({ walletAddress }: DetailProps) {
   const [inputError, setInputError] = useState<string | null>(null);
   const [busy, setBusy] = useState<string | null>(null);
   const [extendInput, setExtendInput] = useState('');
+  const [showGetCfx, setShowGetCfx] = useState(false);
 
   const onEvent = useCallback(
     (event: DecodedEvent) => {
@@ -127,6 +129,9 @@ export function CampaignDetail({ walletAddress }: DetailProps) {
 
   return (
     <div className="container detail-layout">
+      {showGetCfx && (
+        <GetCfxModal walletAddress={walletAddress} onClose={() => setShowGetCfx(false)} />
+      )}
       <div className="detail-main">
         <Link to="/" className="back-link">
           ← All campaigns
@@ -262,6 +267,12 @@ export function CampaignDetail({ walletAddress }: DetailProps) {
           <form className="card contribute-card" onSubmit={handleContribute}>
             <h2>Back this campaign</h2>
           <NotifyButton campaignName={config.name} />
+          <p className="detail-hint">
+            Need test CFX?{' '}
+            <button type="button" className="link-button" onClick={() => setShowGetCfx(true)}>
+              Here's how to get it
+            </button>
+          </p>
             {contribution > 0n && (
               <p className="detail-hint">Your contribution: {formatCFX(contribution)} CFX</p>
             )}
