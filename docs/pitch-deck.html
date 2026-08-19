@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CrowdfundX — Pitch Deck (Level 5)</title>
+<style>
+  :root {
+    --bg: #0b0e14; --panel: #12161f; --card: #161b26;
+    --border: #232a38; --text: #e8ecf4; --dim: #97a1b3;
+    --primary: #5b8cff; --success: #34d399; --warning: #fbbf24;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: #05070c; color: var(--text);
+    font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  }
+  .deck { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+  .slide {
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: 18px; padding: 3rem 3.5rem; margin-bottom: 1.5rem;
+    min-height: 32rem; display: flex; flex-direction: column;
+    box-shadow: 0 12px 40px rgba(0,0,0,.45);
+  }
+  .kicker { color: var(--primary); text-transform: uppercase; letter-spacing: .12em; font-size: .8rem; font-weight: 700; }
+  h1 { font-size: 2.6rem; margin: .4rem 0; }
+  h2 { font-size: 1.9rem; margin: .4rem 0 1rem; }
+  p, li { color: var(--dim); line-height: 1.6; }
+  .big { font-size: 1.15rem; }
+  .grid { display: grid; gap: 1.2rem; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.4rem; }
+  .card h3 { margin: 0 0 .5rem; color: var(--text); }
+  .num { font-size: 2rem; font-weight: 800; color: var(--primary); }
+  .stat-row { display: flex; gap: 2rem; flex-wrap: wrap; margin: 1.2rem 0; }
+  .stat { text-align: center; min-width: 8rem; }
+  .stat .num { color: var(--success); }
+  .stat span { color: var(--dim); font-size: .85rem; }
+  .flow {
+    display: flex; align-items: center; gap: .7rem; flex-wrap: wrap;
+    font-family: monospace; font-size: .95rem;
+  }
+  .node { background: var(--panel); border: 1px solid var(--primary); border-radius: 10px; padding: .5rem .9rem; color: var(--text); }
+  .arrow { color: var(--primary); }
+  .tag { display:inline-block; background: var(--panel); border:1px solid var(--border); border-radius:999px; padding:.25rem .8rem; font-size:.8rem; color: var(--dim); margin:.2rem .3rem .2rem 0; }
+  .foot { color: var(--dim); font-size: .8rem; margin-top: auto; padding-top: 1.5rem; }
+  .title-slide { justify-content: center; text-align: center; }
+  .title-slide h1 { font-size: 3.2rem; }
+  .logo { color: var(--primary); font-size: 2.4rem; }
+  @media print {
+    body { background: #fff; }
+    .deck { max-width: none; padding: 0; }
+    .slide { box-shadow: none; border-radius: 0; margin: 0; page-break-after: always; min-height: auto; }
+  }
+</style>
+</head>
+<body>
+<div class="deck">
+
+  <section class="slide title-slide">
+    <div class="logo">◈</div>
+    <h1>CrowdfundX</h1>
+    <p class="big">All-or-nothing crowdfunding with milestone payouts and instant refunds — fully on Stellar Soroban.</p>
+    <p class="big" style="color:var(--primary)">Anyone can fund anyone, verified on-chain.</p>
+    <div class="foot">Level 5 — Blue Belt · Stellar Builder Program · testnet: 51+ wallets · repo: github.com/xeu03/crowdfundx-level5</div>
+  </section>
+
+  <section class="slide">
+    <span class="kicker">Problem</span>
+    <h2>Creators in emerging markets can't get funded</h2>
+    <div class="grid">
+      <div class="card"><h3>5–12% platform fees</h3><p>Legacy crowdfunding charges creators and backers at every step, on top of payment processing.</p></div>
+      <div class="card"><h3>Days-long payouts</h3><p>Even after a campaign succeeds, creators wait days for settlement — a lifetime when payroll is due.</p></div>
+      <div class="card"><h3>No trust</h3><p>Backers can't see where money goes after funding. All-or-nothing promises rely on a middleman's word.</p></div>
+      <div class="card"><h3>Geographic exclusion</h3><p>Bank-only rails shut out creators and backers in under-banked regions — exactly where funding matters most.</p></div>
+    </div>
+    <div class="foot">Global crowdfunding market: ~$1.3B transactions in 2024 alone (Statista) — dominated by a handful of centralized platforms.</div>
+  </section>
+
+  <section class="slide">
+    <span class="kicker">Solution</span>
+    <h2>Crowdfunding as a smart contract</h2>
+    <p class="big">Every campaign is its own Soroban contract with a locked vault, milestone payouts and guaranteed refunds. No middleman holds the money.</p>
+    <div class="grid">
+      <div class="card"><h3>🎯 Milestone vault</h3><p>Funds are released to the creator only as scheduled milestones — backers see every payout on-chain.</p></div>
+      <div class="card"><h3>↩️ Instant refunds</h3><p>Missed the goal? Anyone can close the campaign and every backer claims their full contribution back.</p></div>
+      <div class="card"><h3>⚡ Near-zero fees</h3><p>Stellar transaction costs are fractions of a cent — platform fee is 10 CFX flat, paid only by creators.</p></div>
+      <div class="card"><h3>📡 Live everything</h3><p>Contributions, payouts and refunds stream into the UI in seconds via Soroban events.</p></div>
+    </div>
+    <div class="foot">Live demo: crowdfundx-level4.netlify.app · contracts deployed on testnet</div>
+  </section>
+
+  <section class="slide">
+    <span class="kicker">Market</span>
+    <h2>Where CrowdfundX wins</h2>
+    <div class="card" style="margin-bottom:1rem">
+      <p class="big">The wedge: <strong>creators &amp; backers in Southeast Asia</strong> — high crypto adoption (Vietnam &amp; Philippines rank in the global top 10), under-served by global platforms, and fluent with wallet-first products.</p>
+    </div>
+    <div class="stat-row">
+      <div class="stat"><div class="num">$1.3B+</div><span>crowdfunding volume</span></div>
+      <div class="stat"><div class="num">3rd</div><span>Vietnam crypto adoption</span></div>
+      <div class="stat"><div class="num">&lt;0.01¢</div><span>per Stellar tx</span></div>
+    </div>
+    <p>Next expansion: stablecoin campaigns (USDC), fiat on/off-ramps through Stellar anchors, and embeddable campaign widgets for creators' own channels.</p>
+  </section>
+
+  <section class="slide">
+    <span class="kicker">Architecture</span>
+    <h2>Three contracts, one factory, live events</h2>
+    <div class="flow">
+      <span class="node">Wallet (Freighter)</span><span class="arrow">→</span>
+      <span class="node">React dApp</span><span class="arrow">→</span>
+      <span class="node">Soroban RPC</span><span class="arrow">→</span>
+      <span class="node">Factory</span><span class="arrow">→</span>
+      <span class="node">Campaign ×N</span><span class="arrow">↔</span>
+      <span class="node">CFX Token</span>
+    </div>
+    <p style="margin-top:1.2rem">The factory deploys each campaign with a deterministic salt; campaigns pull CFX from backers into their vault, pay creators by milestone, and notify the factory via invoker-authorized callbacks. Events stream to the UI with cursor pagination.</p>
+    <div>
+      <span class="tag">Rust / soroban-sdk 27</span><span class="tag">React 19 + TS + Vite</span>
+      <span class="tag">Express + SQLite feedback API</span><span class="tag">Sentry</span>
+      <span class="tag">PostHog</span><span class="tag">GitHub Actions CI/CD</span>
+      <span class="tag">Netlify + Render</span>
+    </div>
+    <div class="foot">24 contract tests · 38 frontend tests · 5 backend tests — all green in CI</div>
+  </section>
+
+  <section class="slide">
+    <span class="kicker">Traction</span>
+    <h2>Validated on testnet</h2>
+    <div class="stat-row">
+      <div class="stat"><div class="num">51</div><span>wallets onboarded</span></div>
+      <div class="stat"><div class="num">8</div><span>live campaigns</span></div>
+      <div class="stat"><div class="num">4.5/5</div><span>avg user rating</span></div>
+      <div class="stat"><div class="num">60+</div><span>on-chain txs</span></div>
+    </div>
+    <div class="grid">
+      <div class="card"><h3>What users said</h3>
+        <p>“Milestone payouts are a killer feature.” — alice<br>
+        “Finally a platform where I can see where the money goes.” — erin<br>
+        “Works great on mobile.” — grace</p></div>
+      <div class="card"><h3>What we shipped from feedback</h3>
+        <p>USD display toggle · browser notifications for milestones · wallet balance in header · “How to get CFX” guide · onboarding checklist</p></div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <span class="kicker">Growth</span>
+    <h2>From 50 testnet users to a community</h2>
+    <div class="grid">
+      <div class="card"><h3>1 · Creator-led</h3><p>Recruit creators first — each campaign brings its own backers. Target: 10 creators → 500 backers.</p></div>
+      <div class="card"><h3>2 · Community</h3><p>Telegram/Discord challenges with leaderboard rewards; ambassador program for student crypto clubs.</p></div>
+      <div class="card"><h3>3 · Anchor rails</h3><p>USDC campaigns + fiat on/off-ramps so backers contribute in their local currency.</p></div>
+      <div class="card"><h3>4 · Mainnet</h3><p>Launch with 3 flagship community campaigns, public audit, then open the platform.</p></div>
+    </div>
+    <div class="foot">Retention loop: contributions → live event feed → leaderboard status → milestone notifications → repeat</div>
+  </section>
+
+  <section class="slide">
+    <span class="kicker">Roadmap</span>
+    <h2>What's next</h2>
+    <div class="card" style="margin-bottom:.8rem"><h3>Q3 2026 — Stability &amp; proof</h3><p>Mainnet-readiness: contract audit, fuzz tests, rate-limited faucet, feedback loop closed (13 issues → 4 shipped).</p></div>
+    <div class="card" style="margin-bottom:.8rem"><h3>Q4 2026 — Stablecoin + anchors</h3><p>USDC-denominated campaigns, SEP-24 on/off-ramps, creator payouts to bank accounts via anchors.</p></div>
+    <div class="card"><h3>2027 — Platform</h3><p>Embeddable campaign widgets, creator analytics, DAO-governed platform fees, multi-anchor corridors.</p></div>
+    <div class="foot">Full improvement plan with commit links in the README → “Next phase” section.</div>
+  </section>
+
+  <section class="slide title-slide">
+    <div class="logo">◈</div>
+    <h2>Back the next big idea — on-chain.</h2>
+    <p class="big">github.com/xeu03/crowdfundx-level5 · crowdfundx-level4.netlify.app</p>
+    <p style="color:var(--success)">Thank you</p>
+  </section>
+
+</div>
+<script>
+  // Arrow-key navigation for presenting; each slide is one printed page.
+  document.addEventListener('keydown', (e) => {
+    const slides = [...document.querySelectorAll('.slide')];
+    const current = slides.findIndex((s) => s.getBoundingClientRect().top > -10);
+    if (e.key === 'ArrowRight') slides[Math.min(current + 1, slides.length - 1)]?.scrollIntoView({ behavior: 'smooth' });
+    if (e.key === 'ArrowLeft') slides[Math.max(current - 1, 0)]?.scrollIntoView({ behavior: 'smooth' });
+  });
+</script>
+</body>
+</html>
