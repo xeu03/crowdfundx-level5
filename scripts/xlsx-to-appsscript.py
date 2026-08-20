@@ -82,8 +82,10 @@ def build_apps_script(form_id: str, rows: list[list[str]], has_feedback: bool) -
     lines.append(" * run importResponses() and authorize once.")
     lines.append(" */")
     lines.append("")
-    lines.append(f"var FORM_ID = {js_str(form_id)};")
-    lines.append("")
+    if form_id:
+        lines.append("// Standalone-script alternative (unused here):")
+        lines.append(f"// var form = FormApp.openById({js_str(form_id)});")
+        lines.append("")
     lines.append("var ROWS = [")
     for name, email, wallet, rating, feedback in rows:
         fields = [name, email, wallet, rating]
@@ -131,7 +133,7 @@ def build_apps_script(form_id: str, rows: list[list[str]], has_feedback: bool) -
 def main():
     parser = argparse.ArgumentParser(description="xlsx → Google Apps Script importer")
     parser.add_argument("xlsx", help="path to the exported Excel file")
-    parser.add_argument("--form-id", default=DEFAULT_FORM_ID, help="Google Form ID")
+    parser.add_argument("--form-id", default="", help="Google Form ID (optional — only for standalone scripts)")
     parser.add_argument("--out", default="import-form-responses.gs", help="output .gs path")
     args = parser.parse_args()
 
