@@ -61,7 +61,6 @@ export function useEventStream({
     }
     let cancelled = false;
     let timer: ReturnType<typeof setTimeout> | undefined;
-    let cursor: string | undefined;
 
     // The RPC accepts at most 5 contract IDs per filter — chunk the list.
     const chunkedIds: string[][] = [];
@@ -75,24 +74,21 @@ export function useEventStream({
     );
 
     // Empirically measured on testnet: the RPC silently drops matches that
-    // are more than ~10 000 ledgers (~14h) ahead of startLedger. Start from
-    // a 9 000-ledger backscan so recent history loads, then cursor
-    // pagination keeps everything after it live. (Events older than the
-    // backscan are outside the RPC's effective scan window and are dropped.)
+    // are more than ~10 000 ledgers (~14h) ahead of startLedger. So history
+    // is backfilled by walking the whole retention window in 9 000-ledger
+    // steps, then a live cursor poll keeps everything after that current.
     const BACKSCAN_LEDGERS = 9_000;
-    const firstStartLedger = async (): Promise<number> => {
-      const latest = await server.getLatestLedger();
-      return Math.max(1, latest.sequence - BACKSCAN_LEDGERS);
-    };
 
-    const poll = async () => {
+    let liveCursor: string | undefined;
+
+    const pollLive = async () => {
       try {
-        const request = cursor
-          ? { filters, cursor, limit: 100 }
-          : { filters, startLedger: await firstStartLedger(), limit: 100 };
+        const request = liveCursor
+          ? { filters, cursor: liveCursor, limit: 100 }
+          : { filters, startLedger: 1, limit: 100 };
         const res = await server.getEvents(request as rpc.Api.GetEventsRequest);
         if (cancelled) return;
-        cursor = res.cursor;
+        liveCursor = res.cursor;
         for (const event of res.events) {
           onEventRef.current(decodeEvent(event));
         }
@@ -101,12 +97,42 @@ export function useEventStream({
         if (!cancelled) setStatus('error');
       } finally {
         if (!cancelled) {
-          timer = setTimeout(poll, EVENT_POLL_MS);
+          timer = setTimeout(pollLive, EVENT_POLL_MS);
         }
       }
     };
 
-    void poll();
+    const backfillAndGoLive = async () => {
+      try {
+        const [health, latest] = await Promise.all([
+          server.getHealth(),
+          server.getLatestLedger(),
+        ]);
+        let windowStart = Math.max(1, latest.sequence - health.ledgerRetentionWindow + 10);
+        while (windowStart < latest.sequence) {
+          if (cancelled) return;
+          const res = await server.getEvents({
+            filters,
+            startLedger: windowStart,
+            limit: 100,
+          } as rpc.Api.GetEventsRequest);
+          for (const event of res.events) {
+            onEventRef.current(decodeEvent(event));
+          }
+          liveCursor = res.cursor;
+          windowStart += BACKSCAN_LEDGERS;
+        }
+        setStatus('streaming');
+      } catch {
+        if (!cancelled) setStatus('error');
+      } finally {
+        if (!cancelled) {
+          timer = setTimeout(pollLive, EVENT_POLL_MS);
+        }
+      }
+    };
+
+    void backfillAndGoLive();
     return () => {
       cancelled = true;
       if (timer) clearTimeout(timer);

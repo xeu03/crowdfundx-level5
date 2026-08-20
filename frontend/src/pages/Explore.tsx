@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { CampaignCard } from '../components/CampaignCard';
 import { GetCfxModal } from '../components/GetCfxModal';
@@ -21,10 +21,18 @@ export function Explore({ walletAddress }: ExploreProps) {
   const [showGetCfx, setShowGetCfx] = useState(false);
   const { campaigns, stats, loading, error, reload } = useCampaigns(refreshKey);
 
+  // History backfill replays many events at once — debounce the reload so a
+  // burst of events triggers a single registry refresh.
+  const bumpTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const onEvent = useCallback((event: DecodedEvent) => {
-    if (event.name === 'campaign_created' || event.name === 'contribution_tracked') {
-      setRefreshKey((k) => k + 1);
+    if (event.name !== 'campaign_created' && event.name !== 'contribution_tracked') {
+      return;
     }
+    if (bumpTimer.current) return;
+    bumpTimer.current = setTimeout(() => {
+      bumpTimer.current = null;
+      setRefreshKey((k) => k + 1);
+    }, 1_500);
   }, []);
 
   useEventStream({

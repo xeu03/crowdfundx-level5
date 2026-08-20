@@ -1,4 +1,4 @@
-import { useCallback, useState, type FormEvent } from 'react';
+import { useCallback, useRef, useState, type FormEvent } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { ErrorState } from '../components/ErrorState';
 import { EventFeed } from '../components/EventFeed';
@@ -40,11 +40,17 @@ export function CampaignDetail({ walletAddress }: DetailProps) {
   const [extendInput, setExtendInput] = useState('');
   const [showGetCfx, setShowGetCfx] = useState(false);
 
+  const reloadTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const onEvent = useCallback(
     (event: DecodedEvent) => {
       setEvents((current) => [event, ...current].slice(0, 50));
-      // Any state-changing event invalidates the snapshot.
-      reload();
+      // Any state-changing event invalidates the snapshot — debounced so a
+      // history backfill burst triggers one reload, not dozens.
+      if (reloadTimer.current) return;
+      reloadTimer.current = setTimeout(() => {
+        reloadTimer.current = null;
+        reload();
+      }, 1_500);
       // Browser notifications for the moments backers care about.
       if (event.name === 'milestone_released') {
         notifyMilestone('Milestone released', `A milestone of your campaign was released (#${String(event.data.index ?? '?')})`);
