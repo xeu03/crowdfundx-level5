@@ -31,7 +31,10 @@ details from every user:
 2. Share the form link with onboarded users after they contribute.
 3. **Export**: Form → Responses → Link to Sheets → File → Download → **Microsoft
    Excel (.xlsx)** → save as `docs/user-feedback.xlsx` in this repo.
-4. Link the exported sheet here:
+4. Utility: `scripts/xlsx-to-appsscript.py` converts any Excel export with
+   `Full Name / Email Address / Wallet Address / Overall Rating` columns into
+   a ready-to-paste Google Apps Script for bulk import into the form.
+5. Link the exported sheet here:
 
 > *— attach/link `docs/user-feedback.xlsx` once responses are collected —*
 
