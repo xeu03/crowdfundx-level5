@@ -11,12 +11,12 @@
 | Checklist item | Link |
 | --- | --- |
 | Public GitHub repository | https://github.com/xeu03/crowdfundx-level5 |
-| Live deployed application | https://crowdfundx-level4.netlify.app/ |
+| Live deployed application | https://crowdfundx-level5.netlify.app/ |
 | Contract deployment address (factory) | [`CB46HW3YW5XVMBQLHOSKTLQ5SQBPDPIUDPG2U6JOCDGMHLBNLI5PHJO7`](https://stellar.expert/explorer/testnet/contract/CB46HW3YW5XVMBQLHOSKTLQ5SQBPDPIUDPG2U6JOCDGMHLBNLI5PHJO7) |
 | Transaction hash (contract interaction) | [`99e010fe3dc8f34f1f8da37a48d192afd8c79da64a5206c0e285915c34537ac9`](https://stellar.expert/explorer/testnet/tx/99e010fe3dc8f34f1f8da37a48d192afd8c79da64a5206c0e285915c34537ac9) (contribution hitting the goal) |
 | PPT / Pitch deck | [`docs/pitch-deck.html`](docs/pitch-deck.html) — open in a browser and print to PDF (one slide per page) |
 | Demo video link | *— to be filled —* |
-| Proof of 50+ users | [Leaderboard](https://crowdfundx-level4.netlify.app/#/leaderboard) — **51 wallets** with verified on-chain transactions (56 contribution events) |
+| Proof of 50+ users | [Leaderboard](https://crowdfundx-level5.netlify.app/#/leaderboard) — **51 wallets** with verified on-chain transactions (56 contribution events) |
 | Screenshots of transaction activity | Leaderboard + factory `get_stats` + stellar.expert links (see Screenshots below) |
 | User feedback iteration summary | [See below](#user-feedback--what-we-shipped) |
 

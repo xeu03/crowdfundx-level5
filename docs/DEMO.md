@@ -30,13 +30,19 @@ lifecycle end-to-end.
    - Show a campaign that expired below goal → close → refund claim
    - Tokens return to the backer's wallet.
 
-6. **Proof & quality** (1:25–1:45)
+6. **Level 5 growth proof** (1:25–1:45)
+   - Leaderboard page: 51 wallets ranked from on-chain events
+   - Header: USD toggle on (prices next to CFX), wallet balance chip,
+     onboarding checklist for a fresh wallet
+   - Campaign page: 🔔 Notify me button, milestone notifications demo
+
+7. **Proof & quality** (1:45–2:00)
    - Leaderboard page: real wallet addresses ranked by on-chain activity
    - Feedback widget: submit a rating
    - GitHub Actions CI green; Sentry/PostHog dashboards (if configured)
    - Backend health endpoint `GET /api/health`.
 
-7. **Close** (1:45–1:55)
+8. **Close** (2:00–2:10)
    - One-line pitch: "Anyone can fund anyone — verified on-chain."
 
 ## Before recording
