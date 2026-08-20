@@ -1,0 +1,3 @@
+Name,Email,Wallet,Rating,Feedback
+Test User 01,persona01@example.com,GDHQL3FFIWSQJD4QOU3IGQNQYJJAXV4ADIXCLHUHDP2QTRXN3ZBRPLQ,5,"Sample row for pipeline testing"
+Test User 02,persona02@example.com,GDCVJUWFG5WSNLRQN5WMHLVUYWHLLJQUYZNBHRUY5D4V2SJAC7WVDRA,4,"Sample row for pipeline testing"
