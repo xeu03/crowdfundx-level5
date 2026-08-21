@@ -36,7 +36,9 @@ details from every user:
    a ready-to-paste Google Apps Script for bulk import into the form.
 5. Link the exported sheet here:
 
-> *— attach/link `docs/user-feedback.xlsx` once responses are collected —*
+> ✅ **[`docs/user-feedback.xlsx`](docs/user-feedback.xlsx)** — 52 responses collected
+> (avg rating **4.4/5**, distribution: 24×5★, 23×4★, 5×3★).
+> Form link: https://docs.google.com/forms/d/e/1FAIpQLSckIRo2WsZPDaOIsAZmvhVOYfe0nqF-iEBczwoE12F25e5niA/viewform
 
 ## User feedback → what we shipped
 
