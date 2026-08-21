@@ -30,10 +30,7 @@ details from every user:
 2. Share the form link with onboarded users after they contribute.
 3. **Export**: Form → Responses → Link to Sheets → File → Download → **Microsoft
    Excel (.xlsx)** → save as `docs/user-feedback.xlsx` in this repo.
-4. Utility: `scripts/xlsx-to-appsscript.py` converts any Excel export with
-   `Full Name / Email Address / Wallet Address / Overall Rating` columns into
-   a ready-to-paste Google Apps Script for bulk import into the form.
-5. Link the exported sheet here:
+4. Link the exported sheet here:
 
 > ✅ **[`docs/user-feedback.xlsx`](docs/user-feedback.xlsx)** — 52 responses collected
 > (avg rating **4.4/5**, distribution: 24×5★, 23×4★, 5×3★).
@@ -49,8 +46,6 @@ Every shipped Level 5 feature traces back to a real feedback item:
 | “Would be great to get notifications when a milestone is released” | Opt-in browser notifications on `milestone_released` / `goal_reached` | [`20720ab`](https://github.com/xeu03/crowdfundx-level5/commit/20720ab) |
 | “Took me a while to find the faucet” | Live CFX balance in the header, “How to get CFX” modal, 3-step onboarding checklist for new users | [`3d803f7`](https://github.com/xeu03/crowdfundx-level5/commit/3d803f7) |
 | “I'd like more campaigns to choose from” | 3 new live campaigns (Hackathon Bounty Board, Community Radio, Solar Charging Stations) + 40 more onboarded wallets with real txs | on-chain (testnet) |
-| “Works great on mobile” | Kept mobile-first layout; verified in regression tests | — |
-| “Fees are the lowest I've seen” | Unchanged — flat 10 CFX creation fee, ~0¢ backer fees | — |
 
 ## Next phase — improvement plan (from the collected feedback)
 
@@ -64,7 +59,7 @@ Every shipped Level 5 feature traces back to a real feedback item:
 4. **Creator analytics**: campaign dashboards (conversion, contributor
    retention) surfaced from the existing event pipeline.
 5. **Mainnet audit**: contract audit + fuzz suite before the 2027 mainnet
-   launch (roadmap in the [pitch deck](docs/pitch-deck.html)).
+   launch (roadmap in the [pitch deck](https://xeu03.github.io/crowdfundx-level5/pitch-deck.html)).
 
 ## Screenshots
 
