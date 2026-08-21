@@ -145,6 +145,7 @@ export function CampaignDetail({ walletAddress }: DetailProps) {
         <div className="detail-header">
           <h1>{config.name}</h1>
           <StatusBadge status={status} />
+          <NotifyButton campaignName={config.name} />
         </div>
         <p className="detail-creator">by {shortAddress(config.creator)}</p>
 
@@ -272,7 +273,6 @@ export function CampaignDetail({ walletAddress }: DetailProps) {
         {status === 'Active' && (
           <form className="card contribute-card" onSubmit={handleContribute}>
             <h2>Back this campaign</h2>
-          <NotifyButton campaignName={config.name} />
           <p className="detail-hint">
             Need test CFX?{' '}
             <button type="button" className="link-button" onClick={() => setShowGetCfx(true)}>
