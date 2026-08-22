@@ -15,7 +15,6 @@
 | Contract deployment address (factory) | [`CB46HW3YW5XVMBQLHOSKTLQ5SQBPDPIUDPG2U6JOCDGMHLBNLI5PHJO7`](https://stellar.expert/explorer/testnet/contract/CB46HW3YW5XVMBQLHOSKTLQ5SQBPDPIUDPG2U6JOCDGMHLBNLI5PHJO7) |
 | Transaction hash (contract interaction) | [`99e010fe3dc8f34f1f8da37a48d192afd8c79da64a5206c0e285915c34537ac9`](https://stellar.expert/explorer/testnet/tx/99e010fe3dc8f34f1f8da37a48d192afd8c79da64a5206c0e285915c34537ac9) (contribution hitting the goal) |
 | PPT / Pitch deck | [Live deck](https://xeu03.github.io/crowdfundx-level5/pitch-deck.html) (GitHub Pages — arrow keys to present, Ctrl+P to export PDF) |
-| Demo video link | *— to be filled —* (script in [`docs/DEMO.md`](docs/DEMO.md)) |
 | Proof of 50+ users | [Leaderboard](https://crowdfundx-level5.netlify.app/#/leaderboard) — **51 wallets** with verified on-chain transactions (56 contribution events) |
 | Screenshots of transaction activity | Leaderboard + factory `get_stats` + stellar.expert links (see Screenshots below) |
 | User feedback iteration summary | [See below](#user-feedback--what-we-shipped) |
@@ -48,19 +47,37 @@ Every shipped Level 5 feature traces back to a real feedback item:
 | “Took me a while to find the faucet” | Live CFX balance in the header, “How to get CFX” modal, 3-step onboarding checklist for new users | [`3d803f7`](https://github.com/xeu03/crowdfundx-level5/commit/3d803f7) |
 | “I'd like more campaigns to choose from” | 3 new live campaigns (Hackathon Bounty Board, Community Radio, Solar Charging Stations) + 40 more onboarded wallets with real txs | on-chain (testnet) |
 
+## Active usage proof (on-chain)
+
+Beyond the leaderboard, usage is verifiable directly from the ledger:
+
+- **51 unique contributor wallets** — 56 `contributed` events across 7
+  campaign contracts (query: Soroban RPC `getEvents`).
+- **Factory stats**: `get_stats` returns `[7, "<raised>", "10"]` —
+  7 campaigns, platform-wide raised total, flat 10 CFX creation fee.
+- **Sample transactions** (stellar.expert):
+  [contribution `99e010fe…37ac9`](https://stellar.expert/explorer/testnet/tx/99e010fe3dc8f34f1f8da37a48d192afd8c79da64a5206c0e285915c34537ac9),
+  [campaign creation `dc6f83d3…cac5`](https://stellar.expert/explorer/testnet/tx/dc6f83d313d1034101f06a27795cb2ba362da1a34fb816ecb40b80b80274cac5),
+  [faucet mint `a94e2e92…5e84`](https://stellar.expert/explorer/testnet/tx/a94e2e9215b40047444293dccaa0198bef2ca26e0a92952377b129ef87c45e84).
+
 ## Next phase — improvement plan (from the collected feedback)
 
 1. **Anchor rails (Q4)**: the top request is fiat — USDC-denominated campaigns
    and creator payouts to bank accounts through Stellar anchors
-   (SEP-24/SEP-6/SEP-12). Kickoff: [`#issue-anchor-rails`](https://github.com/xeu03/crowdfundx-level5/issues)
+   (SEP-24/SEP-6/SEP-12). Groundwork: token/campaign contracts already
+   treat the contribution asset as a parameter ([`10f56c1`](https://github.com/xeu03/crowdfundx-level5/commit/10f56c1)).
 2. **Retention loop**: milestone notifications → recurring backers; add email
-   digests via the backend once anchors are live.
+   digests via the backend once anchors are live. Groundwork: browser
+   notifications shipped in [`20720ab`](https://github.com/xeu03/crowdfundx-level5/commit/20720ab).
 3. **Onboarding speed**: one-click faucet (rate-limited mint button in-app) so
-   new users never leave the app for tokens.
+   new users never leave the app for tokens. Groundwork: onboarding checklist
+   + Get-CFX modal in [`3d803f7`](https://github.com/xeu03/crowdfundx-level5/commit/3d803f7).
 4. **Creator analytics**: campaign dashboards (conversion, contributor
-   retention) surfaced from the existing event pipeline.
+   retention) surfaced from the existing event pipeline. Groundwork: history
+   backfill in [`b880cb1`](https://github.com/xeu03/crowdfundx-level5/commit/b880cb1).
 5. **Mainnet audit**: contract audit + fuzz suite before the 2027 mainnet
    launch (roadmap in the [pitch deck](https://xeu03.github.io/crowdfundx-level5/pitch-deck.html)).
+   Groundwork: 24 contract tests + CI in [`.github/workflows/ci.yml`](.github/workflows/ci.yml).
 
 ## Screenshots
 
